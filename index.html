@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Somesh vidya mandir</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#0b3d91;
+    --blue-light:#1a5fd0;
+    --orange:#ff7a1a;
+    --orange-light:#ffab5e;
+    --teal:#00b8a9;
+    --bg:#f5f7fb;
+    --ink:#1c2230;
+    --muted:#6b7385;
+    --card:#ffffff;
+    --radius:16px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  h1,h2,h3,h4{font-family:'Poppins', sans-serif;}
+  a{text-decoration:none; color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 28px;
+    border-radius:50px;
+    font-weight:600;
+    font-size:14.5px;
+    border:none;
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--orange); color:#fff; box-shadow:0 8px 20px rgba(255,122,26,0.35);}
+  .btn-outline{background:#fff; color:var(--blue); border:1.5px solid #dbe3f5;}
+  .btn-white{background:#fff; color:var(--blue);}
+
+  /* Top utility bar */
+  .topbar{
+    background:var(--blue);
+    color:#cfe0ff;
+    font-size:12.5px;
+  }
+  .topbar .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:8px 24px;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .topbar .contact-line{display:flex; gap:20px; flex-wrap:wrap;}
+  .topbar .contact-line span{display:flex; align-items:center; gap:6px;}
+  .topbar .social a{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%;
+    background:rgba(255,255,255,0.12);
+    margin-left:6px; font-size:12px;
+  }
+
+  /* Navbar */
+  header{
+    background:#fff;
+    position:sticky; top:0; z-index:50;
+    box-shadow:0 2px 14px rgba(20,30,60,0.06);
+  }
+  .navbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 0;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .logo{
+    width:48px; height:48px; border-radius:12px;
+    background:linear-gradient(135deg, var(--blue), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:800; font-size:18px;
+  }
+  .brand-text h1{font-size:19px; color:var(--blue);}
+  .brand-text span{font-size:11.5px; color:var(--muted); letter-spacing:0.5px;}
+  nav.main-nav ul{display:flex; gap:6px; align-items:center;}
+  nav.main-nav a{
+    padding:10px 16px;
+    font-weight:500;
+    font-size:14.5px;
+    border-radius:8px;
+    color:#33394a;
+    transition:background 0.2s, color 0.2s;
+  }
+  nav.main-nav a:hover, nav.main-nav a:focus-visible{background:#eef2fc; color:var(--blue); outline:none;}
+  .nav-cta{display:flex; gap:10px; align-items:center;}
+  .menu-toggle{display:none; background:none; border:none; font-size:24px; color:var(--blue); cursor:pointer;}
+
+  /* Notice ticker */
+  .ticker-bar{
+    background:linear-gradient(90deg, var(--orange), var(--orange-light));
+    color:#fff;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+  }
+  .ticker-label{
+    background:rgba(0,0,0,0.15);
+    padding:9px 18px;
+    font-size:13px;
+    font-weight:700;
+    white-space:nowrap;
+    letter-spacing:0.5px;
+  }
+  .ticker-track{
+    overflow:hidden;
+    width:100%;
+  }
+  .ticker-content{
+    display:inline-flex;
+    white-space:nowrap;
+    padding:9px 0;
+    animation:scroll-left 26s linear infinite;
+  }
+  .ticker-content span{padding:0 40px; font-size:13.5px;}
+  @keyframes scroll-left{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+
+  /* Hero */
+  .hero{
+    position:relative;
+    background:linear-gradient(135deg, var(--blue) 0%, #123a8f 55%, var(--teal) 130%);
+    color:#fff;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 85% 20%, rgba(255,255,255,0.15), transparent 45%),
+      radial-gradient(circle at 10% 90%, rgba(255,122,26,0.25), transparent 40%);
+  }
+  .hero-inner{
+    position:relative;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:40px;
+    align-items:center;
+    padding:70px 24px 60px;
+  }
+  .hero-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,0.15);
+    padding:7px 16px; border-radius:50px;
+    font-size:13px; font-weight:600;
+    margin-bottom:18px;
+  }
+  .hero h2{
+    font-size:44px; font-weight:800; line-height:1.18;
+    margin-bottom:16px;
+  }
+  .hero h2 span{color:var(--orange-light);}
+  .hero p{
+    font-size:16px; color:#dce6ff; max-width:480px; margin-bottom:26px;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .hero-stats{
+    display:flex; gap:28px; margin-top:38px; flex-wrap:wrap;
+  }
+  .hero-stats div{text-align:left;}
+  .hero-stats strong{display:block; font-size:26px; font-weight:800; color:#fff;}
+  .hero-stats span{font-size:12.5px; color:#c9d8ff;}
+
+  .hero-visual{
+    position:relative;
+    border-radius:20px;
+    overflow:hidden;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.18);
+    padding:22px;
+    backdrop-filter:blur(6px);
+  }
+  .hero-visual h3{font-size:15px; margin-bottom:14px; color:#fff;}
+  .quick-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:12px;
+  }
+  .quick-item{
+    background:#fff;
+    color:var(--blue);
+    border-radius:12px;
+    padding:16px;
+    text-align:center;
+    font-weight:600;
+    font-size:13.5px;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .quick-item:hover{transform:translateY(-4px); box-shadow:0 10px 22px rgba(0,0,0,0.18);}
+  .quick-item .ic{font-size:26px; display:block; margin-bottom:8px;}
+
+  /* Section shared */
+  section{padding:70px 0;}
+  .section-head{text-align:center; max-width:640px; margin:0 auto 42px;}
+  .eyebrow{
+    display:inline-block;
+    background:#eaf1ff;
+    color:var(--blue);
+    font-size:12.5px; font-weight:700;
+    padding:6px 16px; border-radius:50px;
+    letter-spacing:0.5px;
+    margin-bottom:14px;
+  }
+  .section-head h2{font-size:30px; font-weight:800; color:var(--ink);}
+  .section-head p{color:var(--muted); margin-top:10px; font-size:15px;}
+
+  /* About / principal */
+  .about-section{background:#fff;}
+  .about-grid{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:48px;
+    align-items:center;
+  }
+  .about-photo{
+    background:linear-gradient(135deg, var(--blue), var(--teal));
+    border-radius:20px;
+    aspect-ratio:4/5;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:14px; font-weight:600;
+    position:relative;
+  }
+  .about-photo::after{
+    content:"";
+    position:absolute; inset:14px;
+    border:2px solid rgba(255,255,255,0.4);
+    border-radius:14px;
+  }
+  .about-text h3{font-size:24px; margin-bottom:14px; color:var(--ink);}
+  .about-text p{color:var(--muted); margin-bottom:16px; font-size:15px;}
+  .check-list{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px;}
+  .check-list li{display:flex; align-items:flex-start; gap:8px; font-size:14px; color:#3a4257;}
+  .check-list li::before{
+    content:"✓";
+    background:var(--teal); color:#fff;
+    width:20px; height:20px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; flex-shrink:0; margin-top:2px;
+  }
+
+  /* Stats */
+  .stats-section{
+    background:linear-gradient(135deg, var(--blue), #123a8f);
+    color:#fff;
+  }
+  .stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:24px;
+    text-align:center;
+  }
+  .stat strong{font-size:36px; font-weight:800; display:block; color:var(--orange-light);}
+  .stat span{font-size:13.5px; color:#cddcff;}
+
+  /* Programs */
+  .programs-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:22px;
+  }
+  .program-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:28px 22px;
+    box-shadow:0 6px 22px rgba(20,30,60,0.06);
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+    border-top:4px solid transparent;
+  }
+  .program-card:hover{transform:translateY(-6px); box-shadow:0 16px 30px rgba(20,30,60,0.12); border-top-color:var(--orange);}
+  .program-card .ic{
+    width:52px; height:52px; border-radius:14px;
+    background:#eaf1ff; color:var(--blue);
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px; margin-bottom:16px;
+  }
+  .program-card h3{font-size:17px; margin-bottom:8px;}
+  .program-card p{font-size:13.5px; color:var(--muted);}
+
+  /* Gallery */
+  .gallery-section{background:#fff;}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    grid-auto-rows:140px;
+    gap:14px;
+  }
+  .gallery-grid .g1{grid-column:span 2; grid-row:span 2;}
+  .gtile{
+    border-radius:14px;
+    background:linear-gradient(135deg, var(--blue-light), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:12.5px; font-weight:600;
+    opacity:0.9;
+  }
+  .gtile:nth-child(2){background:linear-gradient(135deg, var(--orange), var(--orange-light));}
+  .gtile:nth-child(4){background:linear-gradient(135deg, #6a4cff, #a58bff);}
+  .gtile:nth-child(5){background:linear-gradient(135deg, var(--teal), #5be0d3);}
+
+  /* News */
+  .news-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+  }
+  .news-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:0 6px 22px rgba(20,30,60,0.06);
+    transition:transform 0.2s ease;
+  }
+  .news-card:hover{transform:translateY(-5px);}
+  .news-thumb{
+    height:150px;
+    background:linear-gradient(135deg, var(--blue), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:700; font-size:13px; letter-spacing:1px; text-transform:uppercase;
+  }
+  .news-body{padding:20px;}
+  .news-date{font-size:12px; color:var(--orange); font-weight:700; margin-bottom:8px; display:block;}
+  .news-body h3{font-size:16px; margin-bottom:8px; color:var(--ink);}
+  .news-body p{font-size:13.5px; color:var(--muted);}
+
+  /* CTA */
+  .cta-section{
+    background:linear-gradient(120deg, var(--orange), #ff9d4d);
+    color:#fff;
+    border-radius:24px;
+    margin:0 24px;
+    padding:52px 32px;
+    text-align:center;
+  }
+  .cta-section h2{font-size:28px; font-weight:800; margin-bottom:12px;}
+  .cta-section p{color:#fff2e6; margin-bottom:24px; max-width:520px; margin-left:auto; margin-right:auto;}
+
+  /* Footer */
+  footer{background:#0e1730; color:#a9b3cc; padding:56px 0 0;}
+  .footer-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr 1.2fr;
+    gap:36px;
+    padding-bottom:36px;
+    border-bottom:1px solid #232d4d;
+  }
+  .footer-grid h4{color:#fff; font-size:14.5px; margin-bottom:16px;}
+  .footer-grid p, .footer-grid li{font-size:13.5px; margin-bottom:9px;}
+  .footer-grid a:hover{color:var(--orange-light);}
+  .footer-brand{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+  .footer-brand .logo{width:38px; height:38px; font-size:14px;}
+  .footer-brand span{color:#fff; font-weight:700; font-size:16px;}
+  .footer-bottom{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    padding:20px 24px; font-size:12.5px;
+  }
+
+  @media (max-width:960px){
+    nav.main-nav{display:none;}
+    .menu-toggle{display:block;}
+    .hero-inner{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .stats-grid{grid-template-columns:repeat(2,1fr);}
+    .programs-grid{grid-template-columns:repeat(2,1fr);}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .news-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="contact-line">
+      <span>📞 1</span>
+      <span>✉️ 1</span>
+    </div>
+    <div class="social">
+      <a href="#" aria-label="Facebook">f</a>
+      <a href="#" aria-label="Instagram">ig</a>
+      <a href="#" aria-label="YouTube">yt</a>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="wrap navbar">
+    <div class="brand">
+      <div class="logo">SO</div>
+      <div class="brand-text">
+        <h1>Somesh vidya mandir</h1>
+        <span>sadaeqe</span>
+      </div>
+    </div>
+    <nav class="main-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#academics">Academics</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-outline">Results</a>
+      <a href="#contact" class="btn btn-primary">Admissions Open</a>
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="ticker-bar">
+  <div class="ticker-label">📢 Notice Board</div>
+  <div class="ticker-track">
+    <div class="ticker-content">
+      <span>Admissions open for Session 2026–27 — apply online today</span>
+      <span>Annual Sports Day on 18th August, all classes to assemble by 8 AM</span>
+      <span>PTM for Classes VI–VIII scheduled for 10th October</span>
+      <span>Class X &amp; XII pre-board exam datesheet released</span>
+      <span>Admissions open for Session 2026–27 — apply online today</span>
+      <span>Annual Sports Day on 18th August, all classes to assemble by 8 AM</span>
+      <span>PTM for Classes VI–VIII scheduled for 10th October</span>
+      <span>Class X &amp; XII pre-board exam datesheet released</span>
+    </div>
+  </div>
+</div>
+
+<section class="hero" style="padding:0;">
+  <div class="wrap hero-inner">
+    <div>
+      <span class="hero-badge">🎓 Admissions Open — 2026–27</span>
+      <h2>weq45q4trt <span>qw4354wrt</span></h2>
+      <p>aert3456w3</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-white">Apply for Admission</a>
+        <a href="#about" class="btn btn-outline" style="background:transparent; color:#fff; border-color:rgba(255,255,255,0.5);">Explore School</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>2,400+</strong><span>Students Enrolled</span></div>
+        <div><strong>120+</strong><span>Expert Faculty</span></div>
+        <div><strong>98%</strong><span>Board Result Rate</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <h3>Quick Access</h3>
+      <div class="quick-grid">
+        <a class="quick-item" href="#contact"><span class="ic">📝</span>Online Admission</a>
+        <a class="quick-item" href="#contact"><span class="ic">📊</span>Check Results</a>
+        <a class="quick-item" href="#gallery"><span class="ic">🖼️</span>Photo Gallery</a>
+        <a class="quick-item" href="#contact"><span class="ic">💳</span>Fee Payment</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-section">
+  <div class="wrap stats-grid">
+    <div class="stat"><strong>32</strong><span>Years of Excellence</span></div>
+    <div class="stat"><strong>2,400+</strong><span>Happy Students</span></div>
+    <div class="stat"><strong>120+</strong><span>Qualified Teachers</span></div>
+    <div class="stat"><strong>50+</strong><span>Awards &amp; Recognitions</span></div>
+  </div>
+</section>
+
+<section id="about" class="about-section">
+  <div class="wrap about-grid">
+    <div class="about-photo">School Campus Photo</div>
+    <div class="about-text">
+      <span class="eyebrow">About Our School</span>
+      <h3>we5tew5y</h3>
+      <p>etw36tewtg</p>
+      <p>srtes56xdt</p>
+      <ul class="check-list">
+        <li>Smart classrooms &amp; digital labs</li>
+        <li>Certified &amp; experienced faculty</li>
+        <li>Robotics &amp; STEM programs</li>
+        <li>Sports academy &amp; annual meets</li>
+        <li>Transport &amp; hostel facilities</li>
+        <li>Regular parent-teacher engagement</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="academics">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Academics</span>
+      <h2>Programs Designed for Every Stage</h2>
+      <p>A structured, age-appropriate curriculum that grows with your child.</p>
+    </div>
+    <div class="programs-grid">
+      <div class="program-card">
+        <div class="ic">🧸</div>
+        <h3>Pre-Primary</h3>
+        <p>Play-based learning that builds curiosity, language, and motor skills.</p>
+      </div>
+      <div class="program-card">
+        <div class="ic">📘</div>
+        <h3>Primary (I–V)</h3>
+        <p>Strong foundations in literacy, numeracy, and scientific thinking.</p>
+      </div>
+      <div class="program-card">
+        <div class="ic">🔬</div>
+        <h3>Middle (VI–VIII)</h3>
+        <p>Subject specialization begins with labs, projects, and electives.</p>
+      </div>
+      <div class="program-card">
+        <div class="ic">🎯</div>
+        <h3>Secondary (IX–XII)</h3>
+        <p>CBSE board preparation with Science, Commerce, and Humanities streams.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="gallery-section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Campus Life</span>
+      <h2>Moments From Around Our School</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gtile g1">Annual Day</div>
+      <div class="gtile">Sports Meet</div>
+      <div class="gtile">Science Fair</div>
+      <div class="gtile">Classroom</div>
+      <div class="gtile">Field Trip</div>
+    </div>
+  </div>
+</section>
+
+<section id="news">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">News &amp; Events</span>
+      <h2>What's Happening at Somesh vidya mandir</h2>
+    </div>
+    <div class="news-grid">
+      <article class="news-card">
+        <div class="news-thumb">Science Fair</div>
+        <div class="news-body">
+          <span class="news-date">12 Aug 2026</span>
+          <h3>Students Shine at Regional Science Fair</h3>
+          <p>Twelve student projects advanced to the state-level finals this year.</p>
+        </div>
+      </article>
+      <article class="news-card">
+        <div class="news-thumb">Sports Day</div>
+        <div class="news-body">
+          <span class="news-date">18 Aug 2026</span>
+          <h3>Annual Sports Day Registrations Open</h3>
+          <p>Track, field, and team events for students across all grade levels.</p>
+        </div>
+      </article>
+      <article class="news-card">
+        <div class="news-thumb">Admissions</div>
+        <div class="news-body">
+          <span class="news-date">01 Sep 2026</span>
+          <h3>Admissions Open for Session 2026–27</h3>
+          <p>Applications now open for Nursery through Class XI. Apply online.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="cta-section">
+    <h2>Ready to Join the Somesh vidya mandir Family?</h2>
+    <p>Book a campus tour or start your child's online admission application today.</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="#contact" class="btn btn-white">Start Admission</a>
+      <a href="#contact" class="btn" style="background:rgba(255,255,255,0.15); color:#fff; border:1.5px solid rgba(255,255,255,0.6);">Schedule a Visit</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap footer-grid">
+    <div>
+      <div class="footer-brand">
+        <div class="logo">SO</div>
+        <span>Somesh vidya mandir</span>
+      </div>
+      <p>qweq3w4rq2</p>
+      <p>📞 1<br>✉️ 1</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#academics">Academics</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#news">News &amp; Events</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Admissions</h4>
+      <ul>
+        <li><a href="#contact">Apply Online</a></li>
+        <li><a href="#contact">Fee Structure</a></li>
+        <li><a href="#contact">Check Results</a></li>
+        <li><a href="#contact">Downloads</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Office Hours</h4>
+      <ul>
+        <li>Mon – Sat: 8:00 AM – 3:30 PM</li>
+        <li>Sunday: Closed</li>
+      </ul>
+      <h4 style="margin-top:16px;">Follow Us</h4>
+      <ul style="display:flex; gap:10px;">
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom wrap">
+    <span>&copy; 2026 Somesh vidya mandir. All rights reserved.</span>
+    <span>sadaeqe</span>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.main-nav');
+  toggle.addEventListener('click', () => {
+    nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    nav.style.position = 'absolute';
+    nav.style.top = '100%';
+    nav.style.left = '0';
+    nav.style.right = '0';
+    nav.style.background = '#fff';
+    nav.style.flexDirection = 'column';
+    nav.style.padding = '10px 20px';
+    nav.style.boxShadow = '0 10px 20px rgba(0,0,0,0.08)';
+    nav.querySelector('ul').style.flexDirection = 'column';
+  });
+</script>
+
+</body>
+</html>
