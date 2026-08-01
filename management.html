@@ -3,70 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACADEMIX Academy - Management</title>
+    <meta name="description" content="">
+    <link rel="icon" href="assets/school_logo.png">
+    <title>Somesh vidya mandir - Management</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2563eb; --dark: #0f172a; --light: #f8fafc; --text: #334155; --font: 'Poppins', sans-serif; }
+        :root { --primary: #2563eb; --primary-dark:#1d4ed8; --dark: #0f172a; --light: #f8fafc; --text: #334155; --academix-orange: #f97316; --font: 'Poppins', sans-serif; --notice-h: 0px; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--font); color: var(--text); background: var(--light); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+        body { font-family: var(--font); color: var(--text); background: var(--light); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         a { text-decoration: none; transition: 0.3s; }
-        nav.navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .nav-left { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
-        .nav-left a { font-weight: 600; color: var(--dark); text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
+        img { max-width: 100%; }
+        h1, h2, h3 { color: var(--dark); }
+
+        /* Notice ticker */
+        .notice-bar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1001; background: var(--dark); color: #fff; overflow: hidden; white-space: nowrap; padding: 0.55rem 0; font-size: 0.85rem; font-weight: 600; }
+        .notice-track { display: inline-block; padding-left: 100%; animation: marquee 24s linear infinite; }
+        .notice-track span { margin-right: 5rem; }
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+
+        nav.navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: fixed; width: 100%; top: var(--notice-h); z-index: 1000; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .nav-left { display: flex; gap: 2rem; align-items: center; transition: 0.3s ease-in-out; }
+        .nav-left a { font-weight: 600; color: var(--dark); text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; position: relative; }
         .nav-left a:hover { color: var(--primary); }
-        .nav-right img { height: 50px; width: auto; object-fit: contain; }
-        .page-header { height: 40vh; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 4rem; margin-top: 80px; }
+        .nav-left a.active { color: var(--primary); }
+        .nav-left a.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--primary); border-radius: 2px; }
+        .menu-toggle { display: none; background: none; border: none; cursor: pointer; color: var(--dark); padding: 5px; }
+
+        .nav-right { margin-left: auto; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; background: #fff; }
+        .nav-right img { width: 100%; height: 100%; }
+        .logo-transparent { background: transparent; border-radius: 0; box-shadow: none; height: 50px; width: auto; }
+        .logo-transparent img { object-fit: contain; }
+        .logo-round { border-radius: 50%; width: 58px; height: 58px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid #fff; }
+        .logo-round img { object-fit: cover; }
+        .logo-square { border-radius: 12px; width: 58px; height: 58px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 4px; }
+        .logo-square img { object-fit: contain; }
+        .logo-rectangle { border-radius: 8px; width: auto; height: 50px; padding: 4px 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .logo-rectangle img { object-fit: contain; }
+
+        footer { background: var(--dark); color: #fff; padding: 3rem 5% 1.5rem 5%; margin-top: auto; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .footer-brand h3 { color: #fff; font-size: 1.3rem; margin-bottom: 0.75rem; }
+        .footer-brand p { color: #94a3b8; font-size: 0.9rem; max-width: 320px; }
+        .footer-col h4 { color: #fff; font-size: 0.95rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-col a { display: block; color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.6rem; }
+        .footer-col a:hover { color: #fff; }
+        .footer-socials { display: flex; gap: 0.75rem; margin-top: 1rem; }
+        .footer-socials a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; }
+        .footer-socials a:hover { background: var(--primary); }
+        .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; font-size: 0.85rem; color: #94a3b8; }
+        .footer-powered { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; color: var(--academix-orange); }
+
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+        @media (max-width: 850px) {
+            .menu-toggle { display: block; }
+            .nav-left { position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); flex-direction: column; padding: 0; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); max-height: 0; overflow: hidden; gap: 0; }
+            .nav-left.active { max-height: 500px; padding: 1rem 0; }
+            .nav-left a { padding: 1rem 2rem; width: 100%; text-align: center; border-bottom: 1px solid #eee; }
+            .nav-left a:last-child { border-bottom: none; }
+            .nav-left a.active::after { display: none; }
+            .footer-inner { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand p { max-width: none; margin: 0 auto; }
+            .footer-socials { justify-content: center; }
+            .footer-bottom { justify-content: center; text-align: center; }
+        }
+
+        .page-header { height: 40vh; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; position: relative; margin-top: calc(80px + var(--notice-h)); }
         .page-header::before { content: ""; position: absolute; inset: 0; background: rgba(15,23,42,0.8); }
         .page-header h1 { position: relative; z-index: 2; color: #fff; font-size: 3rem; font-weight: 800; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px 5rem 20px; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 4rem 20px; }
+
         .message-box { background: #fff; padding: 3rem; border-left: 5px solid var(--primary); border-radius: 0 1rem 1rem 0; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); margin-bottom: 4rem; font-style: italic; font-size: 1.1rem; }
-        h2.section-title { text-align: center; font-size: 2.2rem; color: var(--dark); margin-bottom: 3rem; }
+
+        .section-heading { text-align: center; margin-bottom: 2.5rem; }
+        .section-heading h2 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .section-heading p { color: #64748b; max-width: 600px; margin: 0 auto; }
+
+        .achieve-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 4rem; }
+        .achieve-card { background: #fff; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-top: 4px solid var(--academix-orange); }
+        .achieve-card h3 { font-size: 1.15rem; margin-bottom: 0.6rem; }
+        .achieve-card p { color: #64748b; font-size: 0.95rem; }
+
         .board-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .board-card { background: #fff; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); text-align: center; padding-bottom: 2rem; }
+        .board-card { background: #fff; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); text-align: center; padding-bottom: 2rem; transition: transform 0.3s ease; }
+        .board-card:hover { transform: translateY(-10px); }
         .board-card img { width: 100%; height: 250px; object-fit: cover; margin-bottom: 1.5rem; }
-        .board-card h3 { color: var(--dark); font-size: 1.3rem; }
-        .board-card p { color: var(--primary); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; }
-        footer { background: var(--dark); color: #fff; text-align: center; padding: 2rem 5%; font-size: 0.9rem; margin-top: auto; }
+        .board-card h3 { font-size: 1.2rem; }
+        .board-card p { color: var(--primary); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+
     </style>
 </head>
 <body>
+    
     <nav class="navbar">
-        <div class="nav-left">
+        <button class="menu-toggle" aria-label="Toggle Menu" onclick="toggleMenu()">
+            <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <div class="nav-left" id="navLinks">
             
-                <a href="index.html">Home</a>
+                <a href="index.html" class="">Home</a>
             
-                <a href="about.html">About Us</a>
+                <a href="about.html" class="">About Us</a>
             
-                <a href="management.html">Management</a>
+                <a href="management.html" class="active">Management</a>
             
-                <a href="admission.html">Admissions</a>
+                <a href="admission.html" class="">Admissions</a>
             
-                <a href="contact.html">Contact</a>
+                <a href="contact.html" class="">Contact</a>
             
-                <a href="privacy.html">Privacy Policy</a>
+                <a href="privacy.html" class="">Privacy Policy</a>
             
         </div>
-        <div class="nav-right"><img src="assets/default-logo.png" alt="Logo"></div>
+        <div class="nav-right logo-transparent">
+            <img src="assets/school_logo.png" alt="Somesh vidya mandir Logo" loading="lazy" onerror="this.onerror=null;this.src='assets/default-logo.png';">
+        </div>
     </nav>
-    <header class="page-header" style="background-image: url('assets/management_bg_772b4bd8.jpg');">
-        <h1>Leadership & Management</h1>
+
+    <header class="page-header" style="background-image: url('');">
+        <h1>Leadership &amp; Management</h1>
     </header>
+
     <div class="container">
         <div class="message-box">
-            "We believe that a students future is not developed just by doing hardwork it requires proper guidence because without guidence even a rolls royace cant be controlled"
+            ""
             <br><br><strong>- Board of Directors</strong>
         </div>
-        <h2 class="section-title">Board Members</h2>
+
+        
+
+        <div class="section-heading">
+            <h2>Board Members</h2>
+            <p>The people guiding our school's growth and values.</p>
+        </div>
         <div class="board-grid">
             
             <div class="board-card">
-                <img src="assets/member_photo_58f16cad.png" alt="Photo">
-                <h3>Dr.Lal ji pandey</h3>
-                <p>MANAGER</p>
+                <img src="assets/default-avatar.jpg" alt="Default" loading="lazy">
+                <h3>Dr. Robert Smith</h3>
+                <p>Chairman</p>
             </div>
             
         </div>
     </div>
-    <footer><p>POWERED BY ACADEMIX 2 a product of Somesh nova studios@2026-all rights reserved</p></footer>
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h3>Somesh vidya mandir</h3>
+                <p>Empowering the leaders of tomorrow through innovation, dedication, and excellence in education.</p>
+                <div class="footer-socials">
+            
+            
+            
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a><a href="about.html">About Us</a><a href="management.html">Management</a><a href="admission.html">Admissions</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="contact.html">Visit our Contact page</a>
+                <a href="tel:1">1</a>
+                <a href="mailto:1">1</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Somesh vidya mandir &copy; <span id="cur-year"></span> - All rights reserved</p>
+            <p class="footer-powered">POWERED BY ACADEMIX 2 a product of Somesh nova studios@2026-all rights reserved</p>
+        </div>
+    </footer>
+    <script>
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+        var y = document.getElementById('cur-year'); if (y) { y.textContent = new Date().getFullYear(); }
+        document.documentElement.style.setProperty('--notice-h', document.querySelector('.notice-bar') ? '38px' : '0px');
+        // Count-up animation for stat numbers
+        document.querySelectorAll('.stat-number').forEach(function(el){
+            var raw = el.textContent.trim();
+            var match = raw.match(/([0-9]+)(.*)/);
+            if(!match) return;
+            var target = parseInt(match[1], 10);
+            var suffix = match[2] || '';
+            var current = 0;
+            el.textContent = '0' + suffix;
+            var obs = new IntersectionObserver(function(entries){
+                entries.forEach(function(entry){
+                    if(entry.isIntersecting){
+                        var steps = 40, i = 0;
+                        var timer = setInterval(function(){
+                            i++;
+                            current = Math.round((target/steps)*i);
+                            el.textContent = (i>=steps ? target : current) + suffix;
+                            if(i>=steps) clearInterval(timer);
+                        }, 30);
+                        obs.disconnect();
+                    }
+                });
+            }, {threshold: 0.4});
+            obs.observe(el);
+        });
+    </script>
 </body>
 </html>
